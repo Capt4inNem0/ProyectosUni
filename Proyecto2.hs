@@ -73,25 +73,27 @@ data ListaAsoc a b = Vacia | Nodo a b ( ListaAsoc a b ) deriving (Eq, Show)
 type Diccionario = ListaAsoc String String
 type Padron = ListaAsoc Int String
 
+-- 6 a
 type GuiaTelefonica = ListaAsoc Int String
 
+-- 6 b 1
 la_long :: ListaAsoc a b -> Int
 la_long Vacia = 0
 la_long (Nodo a b xs) = 1 + la_long xs
-
-la_reversa :: ListaAsoc a b -> ListaAsoc a b
-la_reversa Vacia = Vacia
-la_reversa (Nodo a b xs) = (Nodo a b Vacia) 
-
+-- 6 b 2
 la_concat :: ListaAsoc a b -> ListaAsoc a b -> ListaAsoc a b
 la_concat Vacia xs = xs
 la_concat (Nodo a b xs) ys = (Nodo a b (la_concat xs ys))
-
+-- 6 b 3
+la_pares :: ListaAsoc a b -> [(a,b)]
+la_pares Vacia = []
+la_pares (Nodo a b xs) = (a,b) : la_pares xs
+-- 6 b 4
 la_busca :: Eq a => ListaAsoc a b -> a -> Maybe b
 la_busca Vacia a = Nothing
 la_busca (Nodo x y xs) a    | a == x = Just y
                             | otherwise = la_busca xs a
-
+-- 6 b 5
 la_borrar :: Eq a => a -> ListaAsoc a b -> ListaAsoc a b
 la_borrar a Vacia = Vacia
 la_borrar a (Nodo x y xs)   | a == x = la_borrar a xs
